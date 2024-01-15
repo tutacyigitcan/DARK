@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace YT
 {
-    public class Item : MonoBehaviour
+    public class Item : ScriptableObject
     {
         [Header("Item Information")] 
         public Sprite itemIcon;

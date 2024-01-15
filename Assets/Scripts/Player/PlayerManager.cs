@@ -17,7 +17,7 @@ namespace YT
         [Header("Players Flags")]
         public  bool isSprinting;
         public bool isInAir;
-        public bool isGrounded;
+        public bool isGrounded ;
 
         private void Awake()
         {
@@ -58,7 +58,8 @@ namespace YT
         {
             inputHandler.rollFlag = false;
             inputHandler.sprintFlag = false;
-            isSprinting = inputHandler.b_Input;
+            inputHandler.rb_Input = false;
+            inputHandler.rt_Input = false;
 
             if (isInAir)
             {

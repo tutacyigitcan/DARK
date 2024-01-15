@@ -15,20 +15,28 @@ namespace YT
         public float mouseY;
 
         public bool b_Input;
+        public bool rb_Input;
+        public bool rt_Input;
         
         public bool rollFlag;
         public bool sprintFlag;
         public float rollInputTimer;
-
         
         private PlayerController inputActions;
+        private PlayerAttacker playerAttacker;
+        private PlayerInventory playerInventory;
         
         
         private Vector2 movementInput;
         private Vector2 cameraInput;
 
+        private void Awake()
+        {
+            playerAttacker = GetComponent<PlayerAttacker>();
+            playerInventory = GetComponent<PlayerInventory>();
+        }
 
-        
+
         private void OnEnable()
         {
             if (inputActions == null)
@@ -51,7 +59,7 @@ namespace YT
         {
             MoveInput(delta);
             HandleRollInput(delta);
-            //HandleRollingAndSprinting(delta);
+            HandleAttackInput(delta);
         }
 
         private void MoveInput(float delta)
@@ -82,6 +90,24 @@ namespace YT
 
                 rollInputTimer = 0;
             }
+        }
+
+        private void HandleAttackInput(float delta)
+        {
+            inputActions.PlayerActions.RB.performed += i => rb_Input = true;
+            inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+
+            // RB Input handles the RIGHT hand weapon's light attack
+            if (rb_Input)
+            {
+                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            }
+
+            if (rt_Input)
+            {
+                playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
+            
         }
         
     }
