@@ -14,6 +14,7 @@ namespace YT
 
         [Header("One Handed Attack Animations")] [CanBeNull]
         public string Light_Attack_1;
+        public string Light_Attack_2;
         public string Heavy_Attack_1;
     }
 }

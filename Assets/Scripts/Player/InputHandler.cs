@@ -20,11 +20,13 @@ namespace YT
         
         public bool rollFlag;
         public bool sprintFlag;
+        public bool comboFlag;
         public float rollInputTimer;
         
         private PlayerController inputActions;
         private PlayerAttacker playerAttacker;
         private PlayerInventory playerInventory;
+        private PlayerManager playerManager;
         
         
         private Vector2 movementInput;
@@ -34,6 +36,7 @@ namespace YT
         {
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory = GetComponent<PlayerInventory>();
+            playerManager = GetComponent<PlayerManager>();
         }
 
 
@@ -42,7 +45,7 @@ namespace YT
             if (inputActions == null)
             {
                 inputActions = new PlayerController();
-                inputActions.PlayerMovement.Movement.performed +=
+                inputActions.PlayerMovement.Movement.performed += 
                     inputActions => movementInput = inputActions.ReadValue<Vector2>();
                 inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
             }
@@ -96,11 +99,25 @@ namespace YT
         {
             inputActions.PlayerActions.RB.performed += i => rb_Input = true;
             inputActions.PlayerActions.RT.performed += i => rt_Input = true;
-
-            // RB Input handles the RIGHT hand weapon's light attack
+            
             if (rb_Input)
             {
-                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                if (playerManager.canDoCombo)
+                {
+                    comboFlag = true;
+                    playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                    comboFlag = false;
+                }
+                else
+                {
+                    if(playerManager.isInteracting)
+                        return;
+                    
+                    if(playerManager.canDoCombo)
+                        return;
+                    
+                    playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                }
             }
 
             if (rt_Input)
