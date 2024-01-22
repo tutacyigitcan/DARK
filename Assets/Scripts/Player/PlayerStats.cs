@@ -5,16 +5,9 @@ using UnityEngine;
 
 namespace YT
 {
-    public class PlayerStats : MonoBehaviour
+    public class PlayerStats : CharacterStats
     {
-        public int healthLevel = 100;
-        public int maxHealth;
-        public int currentHealth;
-
-        public int staminaLevel = 10;
-        public int maxStamina;
-        public int currentStamina;
-
+      
         private HealtBar healtBar;
         private StaminaBar staminaBar;
 

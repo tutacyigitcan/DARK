@@ -15,6 +15,7 @@ namespace YT
         
         private Animator animator;
         private PlayerStats playerStats;
+        private InputHandler inputHandler;
         
         public WeaponItemm attackingWeapon;
         
@@ -22,6 +23,7 @@ namespace YT
         {
             animator = GetComponent<Animator>();
             playerStats = GetComponentInParent<PlayerStats>();
+            inputHandler = GetComponent<InputHandler>();
             
             WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
             foreach (WeaponHolderSlot weaponSlot in weaponHolderSlots) 

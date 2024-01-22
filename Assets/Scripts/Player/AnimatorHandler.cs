@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace YT
 {
-    public class AnimatorHandler : MonoBehaviour
+    public class AnimatorHandler : AnimatorManager
     {
         private PlayerManager playerManager;
-        public Animator anim;
+        
         private InputHandler inputHandler;
         private PlayerLocomation playerLocomation;
         
@@ -91,14 +91,7 @@ namespace YT
             anim.SetFloat(vertical, v, .1f, Time.deltaTime);
             anim.SetFloat(horizontal,h,.1f,Time.deltaTime);
         }
-
-        public void PlayTargetAnimation(string targetAnim, bool isInteracting)
-        {
-            anim.applyRootMotion = isInteracting;
-            anim.SetBool("isInteracting",isInteracting);
-            anim.CrossFade(targetAnim,0.2f);
-        }
-
+        
         public void CanRotate()
         {
             canRotate = true;

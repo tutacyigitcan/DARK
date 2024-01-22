@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace YT
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : CharacterManager
     {
         private InputHandler inputHandler;
         private Animator anim;
@@ -46,9 +46,7 @@ namespace YT
             anim.SetBool("isInAir",isInAir);
             
             inputHandler.TickInput(delta);
-            playerLocomation.HandleMovement(delta);
             playerLocomation.HandleRollingAndSprinting(delta);
-            playerLocomation.HandleFalling(delta,playerLocomation.moveDirection);
             playerLocomation.HandleJumping();
             
             CheckForInteractableObject();
@@ -57,18 +55,13 @@ namespace YT
         private void FixedUpdate()
         {
             float delta = Time.fixedDeltaTime;
-
-            if (cameraHandler != null)
-            {
-                cameraHandler.FollowTarget(delta);
-                cameraHandler.HandleCameraRotation(delta,inputHandler.mouseX,inputHandler.mouseY);
-            }
+            playerLocomation.HandleMovement(delta);
+            playerLocomation.HandleFalling(delta,playerLocomation.moveDirection);
         }
 
         private void LateUpdate()
         {
             inputHandler.rollFlag = false;
-            inputHandler.sprintFlag = false;
             inputHandler.rb_Input = false;
             inputHandler.rt_Input = false;
             inputHandler.d_Pad_Up = false;
@@ -78,6 +71,13 @@ namespace YT
             inputHandler.a_Input = false;
             inputHandler.jump_Input = false;
 
+            float delta = Time.deltaTime;
+            if (cameraHandler != null)
+            {
+                cameraHandler.FollowTarget(delta);
+                cameraHandler.HandleCameraRotation(delta,inputHandler.mouseX,inputHandler.mouseY);
+            }
+            
             if (isInAir)
             {
                 playerLocomation.inAirTimer = playerLocomation.inAirTimer + Time.deltaTime;
