@@ -9,11 +9,13 @@ namespace YT
     {
         private AnimatorHandler animatorHandler;
         private InputHandler inputHandler;
+        private WeaponSlotManager weaponSlotManager;
         public string lastAttack;
 
         private void Awake()
         {
             animatorHandler = GetComponentInChildren<AnimatorHandler>();
+            weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
             inputHandler = GetComponent<InputHandler>();
         }
 
@@ -31,14 +33,16 @@ namespace YT
         
         public void HandleLightAttack(WeaponItemm weapon)
         {
+            weaponSlotManager.attackingWeapon = weapon;
             animatorHandler.PlayTargetAnimation(weapon.Light_Attack_1, true);
             lastAttack = weapon.Light_Attack_1;
         }
 
         public void HandleHeavyAttack(WeaponItemm weapon)
         {
-            animatorHandler.PlayTargetAnimation(weapon.Light_Attack_2, true);
-            lastAttack = weapon.Light_Attack_2;
+            weaponSlotManager.attackingWeapon = weapon;
+            animatorHandler.PlayTargetAnimation(weapon.Light_Attack_1, true);
+            lastAttack = weapon.Light_Attack_1;
         }
     }
 }

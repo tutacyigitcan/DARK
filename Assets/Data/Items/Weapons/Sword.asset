@@ -16,5 +16,11 @@ MonoBehaviour:
   itemName: Sword
   modelPrefab: {fileID: 8774878463887473542, guid: 8b99e2a2fb753a644872fe771e56b7c6, type: 3}
   isUnarmed: 0
+  right_hand_idle: Right_Arm_Idle
+  left_hand_idle: Left_Arm_Idle
   Light_Attack_1: Light_ Attack_1
+  Light_Attack_2: Light_ Attack_2
   Heavy_Attack_1: Heavy_Attack_1
+  baseStamina: 20
+  lightAttackMultiplier: 1
+  heavyAttackMultiplier: 2

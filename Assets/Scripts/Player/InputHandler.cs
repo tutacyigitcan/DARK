@@ -17,6 +17,13 @@ namespace YT
         public bool b_Input;
         public bool rb_Input;
         public bool rt_Input;
+        public bool a_Input;
+        public bool jump_Input;
+        
+        public bool d_Pad_Up;
+        public bool d_Pad_Down;
+        public bool d_Pad_Left;
+        public bool d_Pad_Right;
         
         public bool rollFlag;
         public bool sprintFlag;
@@ -63,6 +70,9 @@ namespace YT
             MoveInput(delta);
             HandleRollInput(delta);
             HandleAttackInput(delta);
+            HandleQuickSlotsInput();
+            HandleInteractingButtonInput();
+            HandleJumpInput();
         }
 
         private void MoveInput(float delta)
@@ -125,6 +135,33 @@ namespace YT
                 playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
             }
             
+        }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        private void HandleQuickSlotsInput()
+        {
+            inputActions.PlayerQuickSlots.DPadRight.performed += i => d_Pad_Right = true;
+            inputActions.PlayerQuickSlots.DPadLeft.performed += i => d_Pad_Left = true;
+            
+            if (d_Pad_Right)
+            {
+                playerInventory.ChangeRightWeapon();
+            }
+            else if (d_Pad_Left)
+            {
+                playerInventory.ChangeLeftWeapon();
+            }
+            
+        }
+
+        private void HandleInteractingButtonInput()
+        {
+            inputActions.PlayerActions.A.performed += i => a_Input = true;
+        }
+
+        private void HandleJumpInput()
+        {
+            inputActions.PlayerActions.Jump.performed += i => jump_Input = true;
         }
         
     }
